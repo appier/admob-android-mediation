@@ -88,3 +88,29 @@ public class MainActivity extends AppCompatActivity {
   }
 }
 ```
+
+## Predict Ads
+Predict mode provides a function to do the Ad response prediction before real AdMob line items are triggered. It is recommended to do the prediction at the previous activity/user view before rendering ads. For details, you could contact our support.
+
+Refer to [pmp-android-example](https://github.com/appier/pmp-android-sample) for sample integrations.
+
+### How to predict Ads
+we recommend to do the prediction at the previous activity/user view before rendering ads.
+``` java
+import com.appier.ads.AppierPredictor;
+import com.appier.mediation.admob.AppierAdUnitIdentifier;
+import com.appier.mediation.admob.AppierPredictHandler;
+
+public class MainActivity extends AppCompatActivity {
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       // ...
+       AppierPredictor predictor = new AppierPredictor(
+           getContext(),
+           new AppierPredictHandler(getContext())
+       );
+        // Predict by the ad unit id. It is recommended to do the prediction
+        // at the previous activity/user view before rendering ads.
+       predictor.predictAd(new AppierAdUnitIdentifier("<your_ad_unit_id_from_admob>"));
+}
+```
