@@ -1,0 +1,2 @@
+include ':appier-admob-mediation'
+rootProject.name='pmp-admob-android-mediation'
