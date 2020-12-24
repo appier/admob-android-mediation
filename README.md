@@ -89,6 +89,93 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
+## Native Ads Integration
+
+To render Appier's native ads via AdMob mediation, you need to provide `<your_ad_unit_id_from_admob>` and `<your_zone_id_from_appier>`. You can either pass through `localExtras` or `serverExtras`:
+
+``` java
+import com.appier.ads.common.AppierDataKeys;
+import com.appier.mediation.admob.ads.AppierNative;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.gms.ads.formats.UnifiedNativeAdView;
+
+
+Bundle localExtras = new Bundle();
+localExtras.putString(AppierDataKeys.AD_UNIT_ID_LOCAL, "<your_ad_unit_id_from_admob>");
+
+// Inflate the layout
+final UnifiedNativeAdView nativeAdView = (UnifiedNativeAdView) getLayoutInflater().inflate(R.layout.template_admob_native_ad, null);
+
+AdLoader adLoader = new AdLoader.Builder(mContext, "<your_ad_unit_id_from_admob>")
+        .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+            @Override
+            public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                Appier.log("[Sample App]", "onUnifiedNativeAdLoaded()");
+
+                populateUnifiedNativeAdView(unifiedNativeAd, nativeAdView);
+                mAdContainer.addView(nativeAdView);
+            }
+        })
+        .build();
+
+// Load Ad
+adLoader.loadAd(new AdRequest.Builder()
+        .addCustomEventExtrasBundle(AppierNative.class, localExtras)
+        .build());
+```
+
+The `R.layout.template_admob_native_ad` is a xml template of `UnifiedNativeAdView`. 
+You can get more details on the [Native Ads Advanced](https://developers.google.com/admob/android/native/advanced).
+
+```xml
+<com.google.android.gms.ads.formats.UnifiedNativeAdView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+    android:orientation="vertical"
+    ... >
+        <LinearLayout
+        android:orientation="horizontal"
+        ... >
+          <ImageView
+           android:id="@+id/ad_app_icon"
+           ... />
+          <TextView
+            android:id="@+id/ad_headline"
+            ... />
+         </LinearLayout>
+
+
+         // Other assets such as image or media view, call to action, etc follow.
+         ...
+    </LinearLayout>
+</com.google.android.gms.ads.formats.UnifiedNativeAdView>
+```
+
+The `populateUnifiedNativeAdView` sets the text, images and the native ad, etc into the ad view. You can specify Appier native view through the method `getAdvertiser()` of AdMob native ad. The sample is following:
+```java
+import com.appier.mediation.admob.AppierAdapterConfiguration;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.gms.ads.formats.UnifiedNativeAdView;
+
+void populateUnifiedNativeAdView(UnifiedNativeAd nativeAd, UnifiedNativeAdView adView) {
+        adView.setVisibility(View.VISIBLE);
+
+        // when the advertiser name is `Appier`, the ad is provided by Appier.
+        if (nativeAd.getAdvertiser().equals(AppierAdapterConfiguration.getAdvertiserName())) {
+            // ...
+            adView.setHeadlineView(adView.findViewById(R.id.ad_headline));
+            ((TextView) adView.getHeadlineView()).setText(nativeAd.getHeadline());
+            adView.setIconView(adView.findViewById(R.id.ad_app_icon));
+            ((ImageView) adView.getIconView()).setImageDrawable(nativeAd.getIcon().getDrawable());
+            adView.setNativeAd(nativeAd);
+        }
+    }
+```
+
 ## Banner Ads Integration
 
 To render Appier's banner ads via AdMob mediation, you need to specify the width and height of ad unit to load ads with suitable sizes. You can either pass through `localExtras` or `serverExtras`.

@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Support banner ad
 - Support interstitial ad
+- Support native ad
 - Support to predict Appier ad
 - Allow to configure GDPR programmatically
 - Allow getting adapter version and network sdk version via `AppierAdapterConfiguration`
