@@ -124,6 +124,28 @@ You also need to define the `adSize` and `adUnitId` otherwise the ad would not d
 </com.google.android.gms.ads.AdView>
 ```
 
+## Interstitial Ads Integration
+
+To render Appier's interstitial ads via AdMob mediation, you need to specify the width and height of ad unit to load ads with suitable sizes. You can either pass through `localExtras` or `serverExtras`.
+
+``` java
+import com.appier.ads.common.AppierDataKeys;
+import com.google.android.gms.ads.InterstitialAd;
+
+// ...
+Bundle localExtras = new Bundle();
+localExtras.put(AppierDataKeys.AD_WIDTH_LOCAL, 320);
+localExtras.put(AppierDataKeys.AD_HEIGHT_LOCAL, 480);
+InterstitialAd interstitialAd = new InterstitialAd(context);
+
+interstitialAd.setAdUnitId("<your_ad_unit_id_from_admob>");
+
+// Load Ad
+mInterstitialAd.loadAd(new AdRequest.Builder()
+        .addCustomEventExtrasBundle(AppierInterstitial.class, mLocalExtras)
+        .build());
+```
+
 ## Predict Ads
 Predict mode provides a function to do the Ad response prediction before real AdMob line items are triggered. It is recommended to do the prediction at the previous activity/user view before rendering ads. For details, you could contact our support.
 
