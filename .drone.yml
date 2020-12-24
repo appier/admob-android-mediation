@@ -1,0 +1,68 @@
+---
+kind: pipeline
+name: default
+
+clone:
+  depth: 1
+
+workspace:
+  base: /drone
+  path: pmp_admob_android_mediation
+
+image_pull_secrets:
+  - .dockerconfigjson
+
+steps:
+  # To fetch submodules in drone pipeline, you will need to make sure:
+  # 1. add private key into drone's repo setting
+  # 2. add public key into bitbucket repo (https://bitbucket.org/plaxieappier/pmp-android-sdk/admin/access-keys/)
+  # 3. add bitbucket.org to ~/.ssh/known_hosts
+  # 4. must call `git submodule init`
+  - name: submodules
+    image: alpine/git
+    environment:
+      SSH_KEY:
+        from_secret: BITBUCKET_PRIVATE_KEY
+    commands:
+      - mkdir ~/.ssh
+      - chmod 700 ~/.ssh
+      - echo "$SSH_KEY" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - ssh-keyscan -t rsa bitbucket.org >> ~/.ssh/known_hosts
+      - git submodule init
+      - git submodule update --recursive --remote
+
+  - name: static analyze mediation
+    image: asia.gcr.io/loyal-manifest-816/android:api-28-gradle-5.6.4
+    commands:
+      # install `infer`
+      # (ref: https://fbinfer.com/docs/getting-started)
+      - |
+        VERSION=0.17.0; \
+        curl -sSL "https://github.com/facebook/infer/releases/download/v$VERSION/infer-linux64-v$VERSION.tar.xz" \
+        | tar -C /opt -xJ && \
+        ln -s "/opt/infer-linux64-v$VERSION/bin/infer" /usr/local/bin/infer
+      # verify infer is installed successfully
+      - infer --version
+      # start static analysis
+      - ./gradlew clean
+      - infer run -- ./gradlew :appier-admob-mediation:build
+
+  - name: build mediation
+    image: asia.gcr.io/loyal-manifest-816/android:api-28-gradle-5.6.4
+    commands:
+      - ./gradlew :appier-admob-mediation:clean :appier-admob-mediation:build
+
+  - name: publish package to bintray and jcenter
+    image: asia.gcr.io/loyal-manifest-816/android:api-28-gradle-5.6.4
+    environment:
+      BINTRAY_USER:
+        from_secret: BINTRAY_USER
+      BINTRAY_API_KEY:
+        from_secret: BINTRAY_API_KEY
+    commands:
+      - ./gradlew :appier-admob-mediation:bintrayUpload
+    when:
+      ref:
+        include:
+        - refs/tags/release-*
