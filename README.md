@@ -89,6 +89,41 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
+## Banner Ads Integration
+
+To render Appier's banner ads via AdMob mediation, you need to specify the width and height of ad unit to load ads with suitable sizes. You can either pass through `localExtras` or `serverExtras`.
+
+``` java
+import com.appier.ads.common.AppierDataKeys;
+import com.appier.mediation.admob.ads.AppierBanner;
+import com.google.android.gms.ads.AdView;
+
+// ...
+Bundle localExtras = new Bundle();
+localExtras.putInt(AppierDataKeys.AD_WIDTH_LOCAL, 300);
+localExtras.putInt(AppierDataKeys.AD_HEIGHT_LOCAL, 250);
+
+AdView adView = getView().findViewById(R.id.admob_banner_ad);
+
+// Load Ad
+adView.loadAd(new AdRequest.Builder()
+        .addCustomEventExtrasBundle(AppierBanner.class, localExtras)
+        .build());
+```
+
+You also need to define the `adSize` and `adUnitId` otherwise the ad would not display correctly.
+
+``` xml
+<com.google.android.gms.ads.AdView
+    android:id="@+id/admob_banner_ad"
+    android:layout_width="300dp"
+    android:layout_height="250dp"
+    android:background="@color/colorAdPlaceholder"
+    ads:adSize="MEDIUM_RECTANGLE"
+    ads:adUnitId="<your_ad_unit_id_from_admob>">
+</com.google.android.gms.ads.AdView>
+```
+
 ## Predict Ads
 Predict mode provides a function to do the Ad response prediction before real AdMob line items are triggered. It is recommended to do the prediction at the previous activity/user view before rendering ads. For details, you could contact our support.
 
