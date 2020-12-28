@@ -1,6 +1,6 @@
 # Appier Mediation for AdMob Android SDK
 
-This is Appier's official Android mediation repository for AdMob SDK. The latest updated documentation can be found [here](https://appier-publisher-services.readme.io/docs/admob).
+This is Appier's official Android mediation repository for AdMob SDK. The latest updated documentation can be found [here](https://appier-publisher-services.readme.io/docs/admob-mediation-sdk).
 
 Refer to [pmp-android-example](https://github.com/appier/pmp-android-sample) for sample integrations.
 
@@ -17,14 +17,13 @@ Refer to [pmp-android-example](https://github.com/appier/pmp-android-sample) for
 
 ## Gradle Configuration
 
-Please add jcenter to your repositories, and specify both AdMob’s dependencies and Appier's dependencies.
-
-*AdMob Dependencies:*
+*AdMob Dependency*
+Please add google to your repositories, and specify AdMob’s dependency
 ``` diff
 
   repositories {
       // ...
-+     jcenter()
++     google()
   }
 
   dependencies {
@@ -33,7 +32,8 @@ Please add jcenter to your repositories, and specify both AdMob’s dependencies
   }
 ```
 
-*Appier Dependencies:*
+*Appier Dependencies*
+Please add jcenter to your repositories, and specify Appier's dependencies
 ``` diff
   repositories {
       // ...
@@ -75,7 +75,7 @@ To prevent your app from crashing, following are the recommended manifest config
 
 ## GDPR Consent (Recommended)
 
-In consent to GDPR, we strongly suggest sending the consent status to our SDK via `Appier.setGDPRApplies()` so that we will not track users personal information. Without this configuration, Appier will not apply GDPR by default. Note that this will impact Advertising performance thus impacting Revenue.
+In consent to GDPR, we strongly suggest sending the consent status to our SDK via `Appier.setGDPRApplies()` so that we will not track users personal information. Without this configuration, Appier will not apply GDPR by default. Note that this will impact advertising performance thus impacting Revenue.
 
 ``` java
 import com.appier.ads.Appier;
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
 ## Native Ads Integration
 
-To render Appier's native ads via AdMob mediation, you need to provide `<your_ad_unit_id_from_admob>` and `<your_zone_id_from_appier>`. You can either pass through `localExtras` or `serverExtras`:
+To render Appier's native ads via AdMob mediation, you need to provide `<your_ad_unit_id_from_admob>` and `<your_zone_id_from_appier>`. You can either pass through `localExtras` or `serverExtras`.
 
 ``` java
 import com.appier.ads.common.AppierDataKeys;
@@ -112,8 +112,6 @@ AdLoader adLoader = new AdLoader.Builder(mContext, "<your_ad_unit_id_from_admob>
         .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
             @Override
             public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
-                Appier.log("[Sample App]", "onUnifiedNativeAdLoaded()");
-
                 populateUnifiedNativeAdView(unifiedNativeAd, nativeAdView);
                 mAdContainer.addView(nativeAdView);
             }
@@ -126,7 +124,7 @@ adLoader.loadAd(new AdRequest.Builder()
         .build());
 ```
 
-The `R.layout.template_admob_native_ad` is a xml template of `UnifiedNativeAdView`. 
+The `template_admob_native_ad` is a xml template of `UnifiedNativeAdView`. 
 You can get more details on the [Native Ads Advanced](https://developers.google.com/admob/android/native/advanced).
 
 ```xml
@@ -155,7 +153,7 @@ You can get more details on the [Native Ads Advanced](https://developers.google.
 </com.google.android.gms.ads.formats.UnifiedNativeAdView>
 ```
 
-The `populateUnifiedNativeAdView` sets the text, images and the native ad, etc into the ad view. You can specify Appier native view through the method `getAdvertiser()` of AdMob native ad. The sample is following:
+The `populateUnifiedNativeAdView` sets the text, images and the native ad, etc into the ad view. You can specify Appier native view through the method `getAdvertiser()` of AdMob native ad.
 ```java
 import com.appier.mediation.admob.AppierAdapterConfiguration;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
@@ -205,7 +203,6 @@ You also need to define the `adSize` and `adUnitId` otherwise the ad would not d
     android:id="@+id/admob_banner_ad"
     android:layout_width="300dp"
     android:layout_height="250dp"
-    android:background="@color/colorAdPlaceholder"
     ads:adSize="MEDIUM_RECTANGLE"
     ads:adUnitId="<your_ad_unit_id_from_admob>">
 </com.google.android.gms.ads.AdView>
@@ -239,7 +236,7 @@ Predict mode provides a function to do the Ad response prediction before real Ad
 Refer to [pmp-android-example](https://github.com/appier/pmp-android-sample) for sample integrations.
 
 ### How to predict Ads
-we recommend to do the prediction at the previous activity/user view before rendering ads.
+We recommend to do the prediction at the previous activity/user view before rendering ads.
 ``` java
 import com.appier.ads.AppierPredictor;
 import com.appier.mediation.admob.AppierAdUnitIdentifier;
