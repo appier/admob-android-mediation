@@ -5,8 +5,6 @@ import android.os.Bundle;
 import com.appier.ads.Appier;
 import com.appier.ads.AppierError;
 import com.appier.ads.common.AppierDataKeys;
-import com.appier.mediation.admob.BuildConfig;
-import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 
 import org.json.JSONException;
@@ -104,21 +102,19 @@ public abstract class AppierBase {
         return adHeight;
     }
 
-    protected AdError buildNoBidError() {
-        return new AdError(AdRequest.ERROR_CODE_NO_FILL, "Appier No Bid", BuildConfig.LIBRARY_PACKAGE_NAME);
+    protected int buildNoBidError() {
+        return AdRequest.ERROR_CODE_NO_FILL;
     }
 
-    protected AdError buildAdError(AppierError appierError) {
-        int errorCode;
+    protected int buildAdError(AppierError appierError) {
         if (appierError == AppierError.NETWORK_ERROR || appierError == AppierError.WEBVIEW_ERROR) {
-            errorCode = AdRequest.ERROR_CODE_NETWORK_ERROR;
+            return AdRequest.ERROR_CODE_NETWORK_ERROR;
         } else if (appierError == AppierError.BAD_REQUEST) {
-            errorCode = AdRequest.ERROR_CODE_INVALID_REQUEST;
+            return AdRequest.ERROR_CODE_INVALID_REQUEST;
         } else if (appierError == AppierError.INTERNAL_SERVER_ERROR) {
-            errorCode = AdRequest.ERROR_CODE_INTERNAL_ERROR;
+            return AdRequest.ERROR_CODE_INTERNAL_ERROR;
         } else {
-            errorCode = AdRequest.ERROR_CODE_INTERNAL_ERROR;
+            return AdRequest.ERROR_CODE_INTERNAL_ERROR;
         }
-        return new AdError(errorCode, appierError.toString(), BuildConfig.LIBRARY_PACKAGE_NAME);
     }
 }

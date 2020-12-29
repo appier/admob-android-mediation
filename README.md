@@ -6,7 +6,7 @@ Refer to [pmp-android-example](https://github.com/appier/pmp-android-sample) for
 
 ## Prerequisites
 
-- Make sure you are using AdMob Android SDK version `19.6.0`
+- Make sure you are using AdMob Android SDK version >= `17.0.0`
 - Make sure your app's `API level >= 18`
 - Make sure you have already configured line items on AdMob Web UI
 	- `Class Name` field should be one of Appier's predefined class names
