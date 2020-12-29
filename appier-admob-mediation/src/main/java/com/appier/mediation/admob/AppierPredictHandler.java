@@ -22,12 +22,12 @@ public class AppierPredictHandler implements AppierPredictor.EventListener {
 
     /*
      * If predict result is null, it means the predict feature is not activated.
-     * Please contact our Publisher Partnerships department to understand more.
-     * If the zone id list is empty, it means currently Appier not bid the user,
+     * For details, please contact our support team.
+     * If the zone id list is empty, it means Appier doesn't bid the user,
      * so the bid request would be passback.
      * If the zone id list has values. we would take the first zone and prefetch
-     * the media resources, the bid result would be load rapidly when bid request
-     * is triggered.
+     * the media resources, the bid result would be load rapidly when the real bid
+     * request is triggered.
      */
     public static String getPredictZone(String adUnitId) {
         List<String> zoneIds = AppierPredictCache.getInstance().getPredictResult(new AppierAdUnitIdentifier(adUnitId));
