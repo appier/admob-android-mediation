@@ -1,0 +1,72 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "network"
+    productFlavors {
+        dev {
+            buildConfigField "String", "APPIER_ADVERTISER_NAME", '"Appier"'
+            dimension "network"
+        }
+        staging {
+            buildConfigField "String", "APPIER_ADVERTISER_NAME", '"Appier"'
+            dimension "network"
+        }
+        production {
+            buildConfigField "String", "APPIER_ADVERTISER_NAME", '"Appier"'
+            dimension "network"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', includes: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // AdMob SDK
+    implementation 'com.google.android.gms:play-services-ads:19.6.0'
+
+    // Appier SDK
+    implementation 'com.appier.android:ads-sdk:1.1.1'
+
+    /**
+     * The following dependencies are development only.
+     */
+
+    // memory leak checking
+    // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.1'
+
+    // Import Appier SDK
+
+    // - from source
+    // implementation project(':appier-sdk')
+}
+
+apply from: 'publish.gradle'
