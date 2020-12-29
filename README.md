@@ -9,11 +9,11 @@ Refer to [pmp-android-example](https://github.com/appier/pmp-android-sample) for
 - Make sure you are using AdMob Android SDK version `19.6.0`
 - Make sure your app's `API level >= 18`
 - Make sure you have already configured line items on AdMob Web UI
-	- `Custom event class` field should be one of Appier's predefined class names
+	- `Class Name` field should be one of Appier's predefined class names
 		- `com.appier.mediation.admob.ads.AppierNative` for native ads
 		- `com.appier.mediation.admob.ads.AppierBanner` for banner ads
 		- `com.appier.mediation.admob.ads.AppierInterstitial` for interstitial ads
-	- `Custom event parameter` field should follow the format `{ "adUnitId": "<your_ad_unit_id_from_admob>", "zoneId": "<your_zone_id_from_appier>" }`
+	- `Parameter` field should follow the format `{ "zoneId": "<your_zone_id_from_appier>" }`
 
 ## Gradle Configuration
 
@@ -187,6 +187,7 @@ import com.google.android.gms.ads.AdView;
 Bundle localExtras = new Bundle();
 localExtras.putInt(AppierDataKeys.AD_WIDTH_LOCAL, 300);
 localExtras.putInt(AppierDataKeys.AD_HEIGHT_LOCAL, 250);
+localExtras.putString(AppierDataKeys.AD_UNIT_ID_LOCAL, "<your_ad_unit_id_from_admob>");
 
 AdView adView = getView().findViewById(R.id.admob_banner_ad);
 
@@ -220,6 +221,7 @@ import com.google.android.gms.ads.InterstitialAd;
 Bundle localExtras = new Bundle();
 localExtras.put(AppierDataKeys.AD_WIDTH_LOCAL, 320);
 localExtras.put(AppierDataKeys.AD_HEIGHT_LOCAL, 480);
+localExtras.putString(AppierDataKeys.AD_UNIT_ID_LOCAL, "<your_ad_unit_id_from_admob>");
 InterstitialAd interstitialAd = new InterstitialAd(context);
 
 interstitialAd.setAdUnitId("<your_ad_unit_id_from_admob>");
