@@ -42,7 +42,7 @@ Please add jcenter to your repositories, and specify Appier's dependencies
 
   dependencies {
       // ...
-+     implementation 'com.appier.android:ads-sdk:1.1.1'
++     implementation 'com.appier.android:ads-sdk:1.1.2'
 +     implementation 'com.appier.android:admob-mediation:1.0.0'
   }
 ```
@@ -124,7 +124,7 @@ adLoader.loadAd(new AdRequest.Builder()
         .build());
 ```
 
-The `template_admob_native_ad` is a xml template of `UnifiedNativeAdView`. 
+The `template_admob_native_ad` is a xml template of `UnifiedNativeAdView`.
 You can get more details on the [Native Ads Advanced](https://developers.google.com/admob/android/native/advanced).
 
 ```xml
