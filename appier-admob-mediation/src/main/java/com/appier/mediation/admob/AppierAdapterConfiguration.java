@@ -7,15 +7,15 @@ public class AppierAdapterConfiguration {
 
     public AppierAdapterConfiguration() {}
 
-    public static String getMediationVersion() {
+    public String getMediationVersion() {
         return BuildConfig.VERSION_NAME;
     }
 
-    public static String getNetworkSdkVersion() {
+    public String getNetworkSdkVersion() {
         return Appier.getVersionName();
     }
 
-    public static String getAdvertiserName() {
+    public String getAdvertiserName() {
         return BuildConfig.APPIER_ADVERTISER_NAME;
     }
 }
