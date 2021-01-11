@@ -4,6 +4,9 @@ import com.appier.ads.Appier;
 
 
 public class AppierAdapterConfiguration {
+
+    public AppierAdapterConfiguration() {}
+
     public static String getMediationVersion() {
         return BuildConfig.VERSION_NAME;
     }
