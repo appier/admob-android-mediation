@@ -39,7 +39,7 @@ public class AppierNativeAdMapper extends UnifiedNativeAdMapper {
         mEventNativeListener = eventNativeListener;
         mBrowserUtil = new BrowserUtil(mContext);
 
-        AppierAdapterConfiguration appierAdapterConfig = new AppierAdapterConfiguration()
+        AppierAdapterConfiguration appierAdapterConfig = new AppierAdapterConfiguration();
         setAdvertiser(appierAdapterConfig.getAdvertiserName());
         setHasVideoContent(false);
         setHeadline(nativeAd.getTitle());
