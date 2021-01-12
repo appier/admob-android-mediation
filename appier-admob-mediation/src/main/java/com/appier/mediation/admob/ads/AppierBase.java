@@ -13,8 +13,6 @@ import org.json.JSONObject;
 
 public abstract class AppierBase {
 
-    protected AppierBase() {}
-
     protected JSONObject parseServerString(String serverString) {
         try {
             return new JSONObject(serverString);
