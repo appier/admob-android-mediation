@@ -1,0 +1,1 @@
+-keep class com.appier.mediation.admob.AppierAdapterConfiguration{ *; }
