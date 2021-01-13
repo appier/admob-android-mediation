@@ -30,6 +30,7 @@ public class AppierNativeAdMapper extends UnifiedNativeAdMapper {
     private final BrowserUtil mBrowserUtil;
     private final View.OnClickListener mAdClickListener;
     private final View.OnClickListener mPrivacyInfoClickListener;
+    private final View.OnAttachStateChangeListener mAttachStateChangeListener;
 
     public AppierNativeAdMapper(Context context,
                                 AppierNativeAd nativeAd,
@@ -72,8 +73,22 @@ public class AppierNativeAdMapper extends UnifiedNativeAdMapper {
                 try {
                     mBrowserUtil.tryToOpenUrl(mNativeAd.getPrivacyInformationIconClickThroughUrl());
                 } catch (JSONException ignored) {
+
                 }
             }
+        };
+
+        mAttachStateChangeListener = new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+                if (!mNativeAd.impressionIsRecordingOrRecorded()) {
+                    mNativeAd.makeImpressionTrackingRequest();
+                }
+                mEventNativeListener.onAdImpression();
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {}
         };
 
         setOverrideClickHandling(true);
@@ -82,6 +97,7 @@ public class AppierNativeAdMapper extends UnifiedNativeAdMapper {
 
     @Override
     public void trackViews(View view, Map<String, View> map, Map<String, View> map1) {
+        view.addOnAttachStateChangeListener(mAttachStateChangeListener);
         for (Map.Entry<String, View> entry: map.entrySet()) {
             if (entry.getKey().equals(UnifiedNativeAdAssetNames.ASSET_ADVERTISER)) {
                 entry.getValue().setOnClickListener(mPrivacyInfoClickListener);
