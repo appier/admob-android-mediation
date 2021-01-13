@@ -104,17 +104,22 @@ public class AppierNative extends AppierBase implements CustomEventNative, Appie
     }
 
     @Override
-    public void onAdShown(AppierNativeAd appierNativeAd) {
-        Appier.log("[Appier AdMob Mediation]", "AppierNative.onAdShown() (Custom Callback)");
-        mAdMobNativeEventListener.onAdImpression();
-    }
-
-    @Override
     public void onImpressionRecorded(AppierNativeAd appierNativeAd) {
+        Appier.log("[Appier AdMob Mediation]", "AppierNative.onImpressionRecorded() (Custom Callback)");
     }
 
     @Override
     public void onImpressionRecordFail(AppierError appierError, AppierNativeAd appierNativeAd) {
+    }
+
+
+    @Override
+    public void onAdShown(AppierNativeAd appierNativeAd) {
+        /*
+         * Since AdMob show events are controlled by `UnifiedNativeAdMapper`,
+         * therefore we handle click event at `AppierNativeAdMapper`.
+         * The `onAdShown` method would not be used.
+         */
     }
 
     @Override
@@ -124,7 +129,6 @@ public class AppierNative extends AppierBase implements CustomEventNative, Appie
          * therefore we handle click event at `AppierNativeAdMapper`.
          * The `onAdClick` method would not be used.
          */
-
     }
 
     @Override
