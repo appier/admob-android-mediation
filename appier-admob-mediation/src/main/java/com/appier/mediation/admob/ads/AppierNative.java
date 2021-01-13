@@ -114,7 +114,13 @@ public class AppierNative extends AppierBase implements CustomEventNative, Appie
 
 
     @Override
-    public void onAdShown(AppierNativeAd appierNativeAd) {}
+    public void onAdShown(AppierNativeAd appierNativeAd) {
+        /*
+         * Since AdMob show events are controlled by `UnifiedNativeAdMapper`,
+         * therefore we handle click event at `AppierNativeAdMapper`.
+         * The `onAdShown` method would not be used.
+         */
+    }
 
     @Override
     public void onAdClick(AppierNativeAd appierNativeAd) {
