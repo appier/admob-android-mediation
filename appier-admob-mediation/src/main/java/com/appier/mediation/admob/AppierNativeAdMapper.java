@@ -55,6 +55,8 @@ public class AppierNativeAdMapper extends UnifiedNativeAdMapper {
 
         if (Appier.getBrowserAgent() == Appier.BrowserAgent.NATIVE) {
             mBrowserUtil.disableInternalBrowser();
+        } else {
+            mBrowserUtil.enableInternalBrowser();
         }
 
         mAdClickListener = new View.OnClickListener() {
