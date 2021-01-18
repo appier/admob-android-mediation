@@ -53,6 +53,12 @@ public class AppierNativeAdMapper extends UnifiedNativeAdMapper {
 
         setImages(images);
 
+        if (Appier.getBrowserAgent() == Appier.BrowserAgent.NATIVE) {
+            mBrowserUtil.disableInternalBrowser();
+        } else {
+            mBrowserUtil.enableInternalBrowser();
+        }
+
         mAdClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +69,7 @@ public class AppierNativeAdMapper extends UnifiedNativeAdMapper {
                         mEventNativeListener.onAdClicked();
                     }
                 } catch (JSONException ignored) {
+                    Appier.log("[Appier AdMob Mediation]", "AppierNative.onAdClick() failed");
                 }
             }
         };
