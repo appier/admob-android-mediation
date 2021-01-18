@@ -163,7 +163,7 @@ void populateUnifiedNativeAdView(UnifiedNativeAd nativeAd, UnifiedNativeAdView a
         adView.setVisibility(View.VISIBLE);
 
         // when the advertiser name is `Appier`, the ad is provided by Appier.
-        if (nativeAd.getAdvertiser().equals(AppierAdapterConfiguration.getAdvertiserName())) {
+        if (nativeAd.getAdvertiser() != null && nativeAd.getAdvertiser().equals(AppierAdapterConfiguration.getAdvertiserName())) {
             // ...
             adView.setHeadlineView(adView.findViewById(R.id.ad_headline));
             ((TextView) adView.getHeadlineView()).setText(nativeAd.getHeadline());
