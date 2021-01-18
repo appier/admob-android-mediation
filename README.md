@@ -28,7 +28,7 @@ Please add google to your repositories, and specify AdMob’s dependency
 
   dependencies {
       // AdMob SDK
-+     implementation 'com.google.android.gms:play-services-ads:19.6.0'
++     implementation 'com.google.android.gms:play-services-ads:19.0.1'
   }
 ```
 
@@ -42,7 +42,7 @@ Please add jcenter to your repositories, and specify Appier's dependencies
 
   dependencies {
       // ...
-+     implementation 'com.appier.android:ads-sdk:1.1.2'
++     implementation 'com.appier.android:ads-sdk:1.1.5'
 +     implementation 'com.appier.android:admob-mediation:1.0.0'
   }
 ```
