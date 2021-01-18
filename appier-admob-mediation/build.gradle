@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:19.6.0'
 
     // Appier SDK
-    implementation 'com.appier.android:ads-sdk:1.1.4'
+    implementation 'com.appier.android:ads-sdk:1.1.5'
 
     /**
      * The following dependencies are development only.
